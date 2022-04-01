@@ -21,11 +21,11 @@ item.quantity=수량
 ```
 
 ### addForm.html
-```
+```html
 <label for = "itemName" th:text="#{item.itemName}"></label>
 ```
 ### editForm.html
-```
+```html
 <label for = "itemName" th:text="#{item.itemName}"></label>
 ```
 각 HTML들은 위와 같이 해당 데이터를 key 값으로 불러서 사용한다
