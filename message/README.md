@@ -55,3 +55,51 @@ item.quantity=수량
 
 accept-language 헤더값을 사용하거나 또는 사용자가 직접 언어를 선택하도록 하고 쿠키 등을 사용해서 처리하면 각 나라의 언어에 맞게 페이지를 보여줄 수 있다.
 스프링도 기본적인 메시지와 국제화를 편하게 사용할 수 있도록 기능을 제공하고 있다. 
+
+
+## 3.스프링이 제공하는 메시지 기능
+
+스프링은 기본적 메시지 관리 기능을 제공한다 
+메시지 관리 기능을 사용하려면 MessageSource를 스프링 빈으로 등록하면 된다.
+```java
+public MessageSource messageSource() {
+  ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    messageSource.setBasenames("message","errors");
+    messageSource.setDefaultEncoding("utf-8");
+    return messageSource;
+    }
+```
+* basenames : 설정파일 이름 지정
+* messages로 지정하면 messages.properties 파일 사용
+* 국제화 기능을 적용하려면 messages_en.properties 같이 파일명 마지막에 언어정보를 준다
+* /resource/messages.properties에 위치한다
+
+> 스프링 부트를 사용하면 스프링 부트가 자동으로 MessageSource를 빈으로 등록함
+
+
+```text
+스프링부트 메시지 소스 기본 값
+spring.messages.basename = messages
+```
+
+
+### 스프링의 국제화 메시지 선택
+메시지 기능은 Locale 정보를 알아야 언어를 선택할 수 있는데 스프링은 언어 선택시 기본으로 Accept-Language 헤더 값을 사용한다
+
+### LocaleResolver
+스프링은 Locale 선택 방식을 변경할 수 있도록 LocaleResolver 인터페이스를 제공한다.
+
+스프링부트는 기본으로 Accept-Language를 활용하는 AcceptHeaderLocaleResolver을 사용함.
+
+
+```java
+public interface LocaleResolver {
+  
+  Locale resolveLocale(HttpServletRequest request);
+  void setLocale(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Locale locle)
+  
+  }
+```
+
+
+
